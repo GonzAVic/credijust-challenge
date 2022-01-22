@@ -9,10 +9,10 @@ const CoinTable = ({ name, history }) => {
       <Text as="h2">123,456</Text>
       <Text as="label">{name}</Text>
       <br />
-      <div class="coin-table--history">
+      <div className="coin-table--history">
         {history &&
           history.map((h) => (
-            <div className="coin-table--row">
+            <div key={h.timestamp} className="coin-table--row">
               <Text>{h.timestamp}</Text>
               <Text>{h.value}</Text>
             </div>

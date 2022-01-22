@@ -16,6 +16,7 @@ code {
 .comparator-tabs--tab {
   display: inline-block;
   padding: 12px;
+  cursor: pointer;
 
   &.active {
     background-color: #ffa800;

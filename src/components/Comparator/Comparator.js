@@ -5,43 +5,45 @@ import ComparatorTabs from "./ComparatorTabs";
 import ComparatorConverter from "./ComparatorConverter";
 import CoinTable from "../CoinTable";
 
-const cryptocompareURL =
-  "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP&tsyms=USD";
-const stormgainURL = "https://public-api.stormgain.com/api/v1/ticker";
-
-// const providers = ["cryptocompare"];
-
-const Comparator = () => {
+const Comparator = ({ coins, coinsConfig, providers }) => {
   const [coinData, setCoinData] = useState({});
   const [currentTab, setCurrentTab] = useState("BTC");
 
   useEffect(() => {
+    setCurrentTab(coins[0]);
+  }, []);
+
+  useEffect(() => {
+    updateCoinValue();
+  }, [currentTab]);
+
+  useEffect(() => {
     const id = setInterval(async () => {
-      const updatesValues = {};
-      updatesValues["cryptocompare"] = extractFromData(
-        await fetchCoinData(cryptocompareURL),
-        true,
-        "BTC.USD",
-        "cryptocompare"
-      );
-      updatesValues["stormgain"] = extractFromData(
-        await fetchCoinData(stormgainURL),
-        true,
-        "BTC_USDT.last_price",
-        "stormgain"
-      );
-      const _coinData = JSON.parse(JSON.stringify(coinData));
-      for (const provider in updatesValues) {
-        if (!_coinData[provider]) {
-          _coinData[provider] = [];
-        }
-        _coinData[provider].push(updatesValues[provider]);
-      }
-      setCoinData(_coinData);
+      updateCoinValue();
     }, 5000);
 
     return () => clearInterval(id);
-  }, [coinData]);
+  }, [coinData, currentTab]);
+
+  const updateCoinValue = async () => {
+    const updatesValues = {};
+    for (const provider in providers) {
+      updatesValues[provider] = extractFromData(
+        await fetchCoinData(providers[provider]),
+        true, // 🐞🔥
+        coinsConfig[currentTab][provider],
+        provider
+      );
+    }
+    const _coinData = JSON.parse(JSON.stringify(coinData));
+    for (const provider in updatesValues) {
+      if (!_coinData[provider]) {
+        _coinData[provider] = [];
+      }
+      _coinData[provider].push(updatesValues[provider]);
+    }
+    setCoinData(_coinData);
+  };
 
   const fetchCoinData = (url) => {
     return fetch(url).then((response) => response.json());
@@ -60,13 +62,18 @@ const Comparator = () => {
 
   const displayTables = () => {
     return Object.keys(coinData).map((cd) => (
-      <CoinTable name={cd} history={coinData[cd]} />
+      <CoinTable key={cd} name={cd} history={coinData[cd]} />
     ));
+  };
+
+  const changeTab = (newTab) => {
+    setCurrentTab(newTab);
+    setCoinData({});
   };
 
   return (
     <div>
-      <ComparatorTabs />
+      <ComparatorTabs currentTab={currentTab} changeTab={changeTab} />
       <div className="comparator-content">{displayTables()}</div>
       <ComparatorConverter />
     </div>
