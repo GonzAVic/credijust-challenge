@@ -23,6 +23,15 @@ button {
   cursor: pointer;
 }
 
+// HEADER
+.header {
+  padding: 20px;
+  background-color: #141925;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+}
+
 // LOGIN
 .login {
   display: flex;

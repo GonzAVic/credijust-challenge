@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // COMPONENTS
+import Layout from "../../layouts/Layout";
 import ComparatorTabs from "./ComparatorTabs";
 import ComparatorConverter from "./ComparatorConverter";
 import CoinTable from "../CoinTable";
@@ -80,11 +81,11 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
   };
 
   return (
-    <div>
+    <Layout>
       <ComparatorTabs currentTab={currentTab} changeTab={changeTab} />
       <div className="comparator-content">{displayTables()}</div>
       <ComparatorConverter currentCoinValue={createCurrentCoinValue()} />
-    </div>
+    </Layout>
   );
 };
 
