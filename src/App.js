@@ -16,7 +16,7 @@ function App() {
           path="/comparator"
           element={
             <Comparator
-              coins={["BTC", "ETH"]}
+              coins={["BTC", "ETH", "XRP"]}
               coinsConfig={{
                 BTC: {
                   cryptocompare: "BTC.USD",
@@ -26,6 +26,10 @@ function App() {
                   cryptocompare: "ETH.USD",
                   stormgain: "ETH_USDT.last_price",
                 },
+                XRP: {
+                  cryptocompare: "XRP.USD",
+                  stormgain: "XRP_USDT.last_price",
+                }
               }}
               providers={{
                 cryptocompare:
