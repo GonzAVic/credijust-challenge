@@ -12,6 +12,36 @@ code {
     monospace;
 }
 
+button {
+  display: block;
+  background-color: #ffa800;
+  border: none;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin: auto;
+  cursor: pointer;
+}
+
+// LOGIN
+.login {
+  display: flex;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+
+  & form {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  & input {
+    width: 300px;
+    margin-bottom: 16px;
+  }
+}
+
 // COMPARATOR
 .comparator-tabs--tab {
   display: inline-block;
