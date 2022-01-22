@@ -1,8 +1,16 @@
 import React from 'react'
 
-const Text = ({children}) => {
+const Text = ({children, as = "p"}) => {
+
+  const textClassNames = {
+    p: "",
+    h1: "h1",
+    h2: "h2",
+    label: "label",
+  }
+
   return (
-    <div>
+    <div className={textClassNames[as]}>
       {children}
     </div>
   )

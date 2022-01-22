@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+// COMPARATOR
+.comparator-tabs--tab {
+  display: inline-block;
+  padding: 12px;
+
+  &.active {
+    background-color: #ffa800;
+  }
+}
+
+.comparator-content {
+  background-color: #f5f5f5;
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+}
+
+// TABLE
+.coin-table {
+  display: inline-block;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #ffffff;
+  min-width: 300px;
+  padding: 20px;
+}
+
+.coin-table--history {
+  height: 250px;
+  overflow-y: auto;
+}
+
+.coin-table--row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+/* TEXT */
+.h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+}
