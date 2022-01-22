@@ -31,7 +31,6 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
     for (const provider in providers) {
       updatesValues[provider] = extractFromData(
         await fetchCoinData(providers[provider]),
-        true, // 🐞🔥
         coinsConfig[currentTab][provider],
         provider
       );
@@ -50,15 +49,13 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
     return fetch(url).then((response) => response.json());
   };
 
-  const extractFromData = (data, isObject, path) => {
+  const extractFromData = (data, path) => {
     let date = new Date();
-    if (isObject) {
-      const valueInTime = {
-        timestamp: date.toLocaleString("en-US"),
-        value: `${getProperty(data, path)}`,
-      };
-      return valueInTime;
-    }
+    const valueInTime = {
+      timestamp: date.toLocaleString("en-US"),
+      value: `${getProperty(data, path)}`,
+    };
+    return valueInTime;
   };
 
   const displayTables = () => {
@@ -91,6 +88,7 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
 
 export default Comparator;
 
+// NOTE: I got this from stackOverflow (since I didn't want to add lodash or any other library)
 // TODO: Move to utils
 function getProperty(obj, prop) {
   var parts = prop.split(".");
