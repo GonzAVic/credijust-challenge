@@ -30,6 +30,16 @@ code {
   justify-content: space-around;
 }
 
+.comparator-convert {
+  padding: 12px;
+}
+
+.comparator-convert--item {
+  display: inline-block;
+  margin-left: 40px;
+  text-align: center;
+}
+
 // TABLE
 .coin-table {
   display: inline-block;
@@ -60,4 +70,12 @@ code {
 .label {
   font-size: 1rem;
   font-weight: 600;
+}
+
+// INPUT
+input {
+  border: 1px solid #7d98b1;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1rem;
 }

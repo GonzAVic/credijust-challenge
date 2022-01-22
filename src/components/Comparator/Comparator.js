@@ -40,7 +40,7 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
       if (!_coinData[provider]) {
         _coinData[provider] = [];
       }
-      _coinData[provider].push(updatesValues[provider]);
+      _coinData[provider].unshift(updatesValues[provider]);
     }
     setCoinData(_coinData);
   };
@@ -71,11 +71,19 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
     setCoinData({});
   };
 
+  const createCurrentCoinValue = () => {
+    const currentCoinValue = {};
+    for (const provider in coinData) {
+      currentCoinValue[provider] = coinData[provider][0].value;
+    }
+    return currentCoinValue;
+  };
+
   return (
     <div>
       <ComparatorTabs currentTab={currentTab} changeTab={changeTab} />
       <div className="comparator-content">{displayTables()}</div>
-      <ComparatorConverter />
+      <ComparatorConverter currentCoinValue={createCurrentCoinValue()} />
     </div>
   );
 };

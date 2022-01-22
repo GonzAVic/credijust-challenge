@@ -19,7 +19,6 @@ const Login = () => {
 
   return (
     <div>
-      lalala
       <Input label="firstName" formik={formik} />
       <Input label="lastName" formik={formik} />
       <Input label="email" formik={formik} />
