@@ -20,7 +20,7 @@ const ComparatorConverter = ({ currentCoinValue }) => {
     for (const provider in currentCoinValue) {
       const coinInUSD = currentCoinValue[provider] * 20;
       convertions.push(
-        <div className="comparator-convert--item">
+        <div key={provider} className="comparator-convert--item">
           <Text as="label">{provider}</Text>
           <Text>{(formik.values.mxn / coinInUSD).toFixed(12)}</Text>
         </div>
