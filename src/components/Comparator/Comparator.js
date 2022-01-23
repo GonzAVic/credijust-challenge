@@ -8,7 +8,7 @@ import CoinTable from "../CoinTable";
 
 const Comparator = ({ coins, coinsConfig, providers }) => {
   const [coinData, setCoinData] = useState({});
-  const [currentTab, setCurrentTab] = useState("BTC");
+  const [currentTab, setCurrentTab] = useState("");
 
   useEffect(() => {
     setCurrentTab(coins[0]);
@@ -27,6 +27,7 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
   }, [coinData, currentTab]);
 
   const updateCoinValue = async () => {
+    if (!Boolean(currentTab)) return;
     const updatesValues = {};
     for (const provider in providers) {
       updatesValues[provider] = extractFromData(
@@ -45,8 +46,9 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
     setCoinData(_coinData);
   };
 
-  const fetchCoinData = (url) => {
-    return fetch(url).then((response) => response.json());
+  const fetchCoinData = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
   };
 
   const extractFromData = (data, path) => {

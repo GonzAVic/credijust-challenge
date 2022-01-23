@@ -16,8 +16,16 @@ const Login = () => {
       phoneNumber: "",
     },
     onSubmit: (values) => {
+      if (
+        !values.firstName ||
+        !values.email ||
+        !values.phoneNumber ||
+        !values.lastName
+      ) {
+        return;
+      }
       localStorage.setItem("userData", JSON.stringify(values));
-      navigate("/comparator")
+      navigate("/comparator");
     },
   });
 
@@ -25,11 +33,37 @@ const Login = () => {
     <Layout>
       <div className="login">
         <form onSubmit={formik.handleSubmit}>
-          <Input label="First Name" name="firstName" formik={formik} />
-          <Input label="Last Name" name="lastName" formik={formik} />
-          <Input label="Email" name="email" formik={formik} />
-          <Input label="Phone Number" name="phoneNumber" formik={formik} />
-          <button type="submit">Submit</button>
+          <Input
+            data-tid="firstName-input"
+            label="First Name"
+            name="firstName"
+            formik={formik}
+            required
+          />
+          <Input
+            data-tid="lastName-input"
+            label="Last Name"
+            name="lastName"
+            formik={formik}
+            required
+          />
+          <Input
+            data-tid="email-input"
+            label="Email"
+            name="email"
+            formik={formik}
+            required
+          />
+          <Input
+            data-tid="phoneNumber-input"
+            label="Phone Number"
+            name="phoneNumber"
+            formik={formik}
+            required
+          />
+          <button data-tid="login-submit-btn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </Layout>

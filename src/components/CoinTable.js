@@ -5,7 +5,7 @@ import Text from "./Text";
 
 const CoinTable = ({ name, history }) => {
   return (
-    <div className="coin-table">
+    <div data-tid={`coin-table-${name}`} className="coin-table">
       <Text as="h2">123,456</Text>
       <Text as="label">{name}</Text>
       <br />

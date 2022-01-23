@@ -3,7 +3,16 @@ import PropTypes from "prop-types";
 
 import Text from "./Text";
 
-const Input = ({ label, name, id, type, formik, onChange, value }) => {
+const Input = ({
+  label,
+  name,
+  id,
+  type,
+  formik,
+  onChange,
+  value,
+  ...props
+}) => {
   return (
     <>
       <Text as="label">{label}</Text>
@@ -13,6 +22,7 @@ const Input = ({ label, name, id, type, formik, onChange, value }) => {
         type={type}
         onChange={onChange || formik.handleChange}
         value={value !== null ? value : formik.values[name]}
+        {...props}
       />
     </>
   );

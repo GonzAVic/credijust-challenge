@@ -5,6 +5,7 @@ const ComparatorTabs = ({ coins, currentTab, changeTab }) => {
     <div className="comparator-tabs">
       {coins.map((c) => (
         <div
+          data-tid={`comparator-tab-${c}`}
           key={c}
           className={`comparator-tabs--tab ${currentTab === c && "active"}`}
           onClick={() => changeTab(c)}
