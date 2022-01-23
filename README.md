@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Crypto Comparator
+A dummy SPA build in React to compare some dynamic crypto coins
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# The idea
+This application is using react-router to habdle different routes ("/login", "/comparator")
 
-## Available Scripts
+I have created some modular components for the UI: <Text /> and <Input />, the idea behind it is create a component system that can help scale the application by creating modular ui components. Each UI component should be responsible for all different variants of that element. For example, the <Text /> component should know how to render a h1, h2, the default text, etc..., but also it should know how to handle the mobile versions, lets say by adjusting the font-size of all different variants.
 
-In the project directory, you can run:
+**The Login** screen is using formik and the <Input /> component to create and handle the form state. This view is using the Layout which wraps any view and adds a Header.
 
-### `npm start`
+**The comparator** screen is composed by 4 main components:
+- Comparator: It's responsability is to serve as a container and run the main functions so that, the Coin tables and the converter can work correctly.
+- ComparatorTabs: the tabs to select which data coin should be rendered.
+- ComparatorConverter: the "footer" of this Comparator component, which recieves the last values from all providers and calculates the convertion from MXN to a given coin
+- CoinTable: It's a compoennt which recierves only the name of the coin, and a history, then this only responsibility is to display the data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**🛑Improtant Note 1🛑:** The comparator has it's own folder and the reason behind it is that this component NEEDS as a children: <ComparatorTabs /> <ComparatorConverter />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**🛑Improtant Note 2🛑:** The Coin Table is not inside inside the /comparator folder, ans the reason is that this <CoinTable /> component can be used without the <Comparator />, that way I can display Any coin data using this <CoinTable />
 
-### `npm test`
+**🛑Improtant Note 3🛑:** The comparator is quite scalable right now, it is "fully" dynamic. This component recieves 3 main props: `coins`, `coinsConfig` and `providers`. This way the implementation of a new coin is painless (see commits "Update: Adding XRP to the convertor" and "Update: Add coingecko to converter as provider" for some examples)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### How can this be more scalable?
+The application can potentially has it's own "providers" data as a global variable (/utils/providers) that way, the <Comparator /> can look for the providers information in that variable.
+Since some providers recieves the coins to be feteched on the query params, there should be a function to generate those endpoints based on an array of coins.
 
-### `npm run build`
+The functionality to parse the data from different providers when fetching it is currently living inside <Comparator />, in order to be more scalable, I can move that funcionallity into a custom hook, that way any component can use that functionality (for exmaple the Cointable)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to...
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### run the project
+This projec tis using node v16.13.1.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. clone this project
+2. once you're on the root folder run the followinf commands...
+3. `nvm` (this project contains a .nvmrc file with the correct version)
+4. `npm install`
+5. `npm start`
 
-### `npm run eject`
+### run the tests
+This project is using cypress for the tests
+Once you have installed the dependencies, run following commands:
+1. `npm start`
+2. IN A NEW TERMINAL `npx cypress open`
+3. Select the test to run
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## For the UI
+I took the freedom of take inspiration from the credijusto.com, to use the main colors and shapes.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Scenario problem
 
-## Learn More
+### What possible risk are you able to identify in this scenario?
+Since the "screens are defined by a state machine", probably the best approach is not to use routes. Now, if this is the case, some risks are:
+- How to persist the data while the user is cative (relode the page, going (if need it) back and foward)
+- If the applicattion is using 3rd parties services, it is in some way coupled with those parties, and if those services change or fail in some way, it will affect the applciaiton
+- Scalability. sharing a state through an amount of sibling components is potentially a "props drilling" issue, and props drilling should be avoided in order to get scalability
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### How would you deal with dependencies?
+Creating it's own module onthe front-end. since the " stakeholders want to see the changes implemented in the application in a weekly manner" it sounds like the 3rd parties services coul potentially change, so I would use some "dependency injection" approach, so that the team/product can move from one service to another if need it.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### What testing strategy would you suggest for this scenario?
+I don't have much experience on testing, but I would use cypress and mocking those 3rd paties modules.
 
-### Code Splitting
+### At the highest level possible, what would the implementation of this look like?
+I would suggest create a "container component" which will be responsible for keep track of the application state related to the "state machine", then, each child screen from this container should recieve a standardized amount of props.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Basically some sort of "redux" approach. (maybe by using context, redux, or just props)
