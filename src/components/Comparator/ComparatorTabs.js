@@ -1,8 +1,6 @@
 import React from "react";
 
-const coins = ["BTC", "ETH", "XRP"];
-
-const ComparatorTabs = ({ currentTab, changeTab }) => {
+const ComparatorTabs = ({ coins, currentTab, changeTab }) => {
   return (
     <div className="comparator-tabs">
       {coins.map((c) => (

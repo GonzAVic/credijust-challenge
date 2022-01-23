@@ -79,7 +79,11 @@ const Comparator = ({ coins, coinsConfig, providers }) => {
 
   return (
     <Layout>
-      <ComparatorTabs currentTab={currentTab} changeTab={changeTab} />
+      <ComparatorTabs
+        coins={coins}
+        currentTab={currentTab}
+        changeTab={changeTab}
+      />
       <div className="comparator-content">{displayTables()}</div>
       <ComparatorConverter currentCoinValue={createCurrentCoinValue()} />
     </Layout>
