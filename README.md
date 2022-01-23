@@ -4,9 +4,9 @@ A dummy SPA build in React to compare some dynamic crypto coins
 # The idea
 This application is using react-router to habdle different routes ("/login", "/comparator")
 
-I have created some modular components for the UI: <Text /> and <Input />, the idea behind it is create a component system that can help scale the application by creating modular ui components. Each UI component should be responsible for all different variants of that element. For example, the <Text /> component should know how to render a h1, h2, the default text, etc..., but also it should know how to handle the mobile versions, lets say by adjusting the font-size of all different variants.
+I have created some modular components for the UI: `<Text />` and `<Input />`, the idea behind it is create a component system that can help scale the application by creating modular ui components. Each UI component should be responsible for all different variants of that element. For example, the `<Text />` component should know how to render a h1, h2, the default text, etc..., but also it should know how to handle the mobile versions, lets say by adjusting the font-size of all different variants.
 
-**The Login** screen is using formik and the <Input /> component to create and handle the form state. This view is using the Layout which wraps any view and adds a Header.
+**The Login** screen is using formik and the `<Input />` component to create and handle the form state. This view is using the Layout which wraps any view and adds a Header.
 
 **The comparator** screen is composed by 4 main components:
 - Comparator: It's responsability is to serve as a container and run the main functions so that, the Coin tables and the converter can work correctly.
@@ -14,17 +14,17 @@ I have created some modular components for the UI: <Text /> and <Input />, the i
 - ComparatorConverter: the "footer" of this Comparator component, which recieves the last values from all providers and calculates the convertion from MXN to a given coin
 - CoinTable: It's a compoennt which recierves only the name of the coin, and a history, then this only responsibility is to display the data.
 
-**🛑Improtant Note 1🛑:** The comparator has it's own folder and the reason behind it is that this component NEEDS as a children: <ComparatorTabs /> <ComparatorConverter />
+**🛑Improtant Note 1🛑:** The comparator has it's own folder and the reason behind it is that this component NEEDS as a children: `ComparatorTabs` `ComparatorConverter` on order to work correctly. It is a Compound component.
 
-**🛑Improtant Note 2🛑:** The Coin Table is not inside inside the /comparator folder, ans the reason is that this <CoinTable /> component can be used without the <Comparator />, that way I can display Any coin data using this <CoinTable />
+**🛑Improtant Note 2🛑:** The Coin Table is not inside inside the /comparator folder, ans the reason is that this `<CoinTable />` component can be used without the `<Comparator />`, that way I can display Any coin data using this `<CoinTable />`
 
 **🛑Improtant Note 3🛑:** The comparator is quite scalable right now, it is "fully" dynamic. This component recieves 3 main props: `coins`, `coinsConfig` and `providers`. This way the implementation of a new coin is painless (see commits "Update: Adding XRP to the convertor" and "Update: Add coingecko to converter as provider" for some examples)
 
 ### How can this be more scalable?
-The application can potentially has it's own "providers" data as a global variable (/utils/providers) that way, the <Comparator /> can look for the providers information in that variable.
+The application can potentially has it's own "providers" data as a global variable (/utils/providers) that way, the `<Comparator />` can look for the providers information in that variable.
 Since some providers recieves the coins to be feteched on the query params, there should be a function to generate those endpoints based on an array of coins.
 
-The functionality to parse the data from different providers when fetching it is currently living inside <Comparator />, in order to be more scalable, I can move that funcionallity into a custom hook, that way any component can use that functionality (for exmaple the Cointable)
+The functionality to parse the data from different providers when fetching it is currently living inside `<Comparator />`, in order to be more scalable, I can move that funcionallity into a custom hook, that way any component can use that functionality (for exmaple the Cointable)
 
 ## How to...
 
